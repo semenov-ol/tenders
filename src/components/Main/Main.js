@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import TendersAPI from '../services/TendersAPI';
-import './Main.css';
 import { Link } from 'react-router-dom';
+
+import TendersAPI from '../services/TendersAPI';
+
+import './Main.css';
 
 const Main = () => {
   const Tenders = new TendersAPI();

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Flex } from 'ustudio-ui';
+import { Flex, Text } from 'ustudio-ui';
 
 const TenderCard = ({ location }) => {
   const [item] = useState(location.item);
@@ -16,33 +16,23 @@ const TenderCard = ({ location }) => {
       >
         <h4>Sorry, can't find such tender, Try another one</h4>
         <div />
-        <Link to="/">Go back</Link>{' '}
+        <Link to="/">Go back</Link>
       </Flex>
     );
   }
   const { title } = item.records[0].compiledRelease.tender;
   const { date } = item.records[0].compiledRelease;
-  const { description } = item.records[0].compiledRelease.tender.classification;
+  const description = item.records[0].compiledRelease.tender.classification?.description;
   const name = item.records[0].compiledRelease.parties?.[0].contactPoint.name;
-  const telephone =
-    item.records[0].compiledRelease.parties?.[0].contactPoint.telephone;
+  const telephone = item.records[0].compiledRelease.parties?.[0].contactPoint.telephone;
   const email = item.records[0].compiledRelease.parties?.[0].contactPoint.email;
   const amount = item.records[0].compiledRelease.planning?.budget.amount.amount;
-  const currency =
-    item.records[0].compiledRelease.planning?.budget.amount.currency;
-  const startDate =
-    item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period
-      .startDate;
-  const endDate =
-    item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period
-      .endDate;
-  const address =
-    item.records[0].compiledRelease.parties?.[0].address.streetAddress;
-  const country =
-    item.records[0].compiledRelease.parties?.[0].address.addressDetails.country
-      .description;
-  const customer =
-    item.records[0].compiledRelease.parties?.[0].details.typeOfBuyer;
+  const currency = item.records[0].compiledRelease.planning?.budget.amount.currency;
+  const startDate = item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period.startDate;
+  const endDate = item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period.endDate;
+  const address = item.records[0].compiledRelease.parties?.[0].address.streetAddress;
+  const country = item.records[0].compiledRelease.parties?.[0].address.addressDetails.country.description;
+  const customer = item.records[0].compiledRelease.parties?.[0].details.typeOfBuyer;
 
   return (
     <div>
@@ -60,7 +50,7 @@ const TenderCard = ({ location }) => {
             horizontal: 'center',
           }}
         >
-          <h5>{title} </h5>
+          <Text variant="h5">{title} </Text>
         </Flex>
         <Flex
           alignment={{
@@ -76,25 +66,22 @@ const TenderCard = ({ location }) => {
         </Flex>
 
         <Flex direction="column">
-          <span style={{ fontSize: '13px' }}>Description:</span>
-          {description}
+          <Text variant="span">Description:</Text>
+          <Text variant="body"> {description}</Text>
         </Flex>
         <Flex margin={{ top: 'regular' }} style={{ fontSize: '15px' }}>
-          Customer: {customer}
+          <Text variant="caption">Customer: {customer}</Text>
         </Flex>
         <Flex margin={{ top: 'large' }} style={{ color: 'green' }}>
-          {' '}
-          <span>
-            Tender start date: {new Date(startDate).toLocaleDateString()}
-          </span>{' '}
+          <Text variant="span">Tender start date: {new Date(startDate).toLocaleDateString()}</Text>
         </Flex>
         <Flex>
-          {' '}
-          Tender Amount: {amount} {currency}
+          <Text variant="span">
+            Tender Amount: {amount} {currency}
+          </Text>
         </Flex>
         <Flex style={{ color: 'red' }}>
-          {' '}
-          Tender end Date: {new Date(endDate).toLocaleDateString()}
+          <Text variant="span">Tender end Date: {new Date(endDate).toLocaleDateString()}</Text>
         </Flex>
 
         <Flex
@@ -109,12 +96,12 @@ const TenderCard = ({ location }) => {
             fontFamily: 'Courier New, Courier, monospace',
           }}
         >
-          <div>Contact info:</div>
-          <div>name: {name} </div>
-          <div>email: {email}</div>
-          <div>Tel: {telephone}</div>
-          <div>Address: {address}</div>
-          <div>Country: {country}</div>
+          <Text>Contact info:</Text>
+          <Text>name: {name} </Text>
+          <Text>email: {email}</Text>
+          <Text>Tel: {telephone}</Text>
+          <Text>Address: {address}</Text>
+          <Text>Country: {country}</Text>
         </Flex>
       </div>
     </div>
