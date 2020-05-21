@@ -7,7 +7,6 @@ import './Main.css';
 
 const Main = () => { 
   const tenders = new tendersAPI();
-
   const [tendersData, setTendersData] = useState([]);
 
   const getTender = id => {
