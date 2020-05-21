@@ -10,6 +10,7 @@ function App() {
   return (
     <div className="App">
       <Route exact path="/" component={Main} />
+
       <Route path="/card" component={TenderCard} />
     </div>
   );

@@ -1,8 +1,11 @@
-export default class TendersAPI {
+export default class tendersAPI {
+  constructor(){
+    this.baseUrl = `https://public.mtender.gov.md/tenders`
+  }
+ 
   getAll = async () => {
     try {
-      const uri = `https://public.mtender.gov.md/tenders`;
-      const req = await fetch(uri);
+      const req = await fetch(this.baseUrl);
       const res = await req.json();
       return res;
     } catch {
@@ -12,8 +15,7 @@ export default class TendersAPI {
 
   getOne = async id => {
     try {
-      const uri = `https://public.mtender.gov.md/tenders/${id}`;
-      const req = await fetch(uri);
+      const req = await fetch(`${this.baseUrl}/${id}`);
       const res = await req.json();
       return res;
     } catch {

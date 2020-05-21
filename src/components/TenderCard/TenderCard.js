@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Flex, Text } from 'ustudio-ui';
 
-const TenderCard = ({ location }) => {
+const TenderCard = () => {
+  let location = useLocation()
   const [item] = useState(location.item);
 
-  if (item === undefined) {
+  if (item === undefined)     {
     return (
       <Flex
-        alignment={{
+        alignment={{ 
           horizontal: 'center',
           vertical: 'center',
         }}
         direction="column"
       >
-        <h4>Sorry, can't find such tender, Try another one</h4>
+        <Text variant='h4'>Sorry, can't find such tender, Try another one</Text>
         <div />
         <Link to="/">Go back</Link>
       </Flex>
@@ -22,8 +23,8 @@ const TenderCard = ({ location }) => {
   }
   const { title } = item.records[0].compiledRelease.tender;
   const { date } = item.records[0].compiledRelease;
-  const description = item.records[0].compiledRelease.tender.classification?.description;
-  const name = item.records[0].compiledRelease.parties?.[0].contactPoint.name;
+  const {description} = item.records[0].compiledRelease.tender.classification;
+  const {name} = item.records[0].compiledRelease.parties?.[0].contactPoint;
   const telephone = item.records[0].compiledRelease.parties?.[0].contactPoint.telephone;
   const email = item.records[0].compiledRelease.parties?.[0].contactPoint.email;
   const amount = item.records[0].compiledRelease.planning?.budget.amount.amount;

@@ -1,55 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import TendersAPI from '../services/TendersAPI';
+import tendersAPI from '../services/tendersAPI';
 
 import './Main.css';
 
 const Main = () => {
-  const Tenders = new TendersAPI();
+  const tenders = new tendersAPI();
 
-  const [arr, setArr] = useState([]);
+  const [tendersData, setTendersData] = useState([]);
 
-  const getTender = async id => {
-    await Tenders.getOne(id).then(data => setArr(prev => [...prev, data]));
+  const getTender = id => {
+    tenders.getOne(id).then(data => setTendersData(prev => [...prev, data]));
   };
 
   useEffect(() => {
     try {
-      async function fetchData() {
+      (async () => {
         const req = await fetch(`https://public.mtender.gov.md/tenders`);
         const res = await req.json();
 
-        if (res) { 
+        if (res) {
           res.data.map(item => getTender(item.ocid));
         }
-      }
-
-      fetchData();
+      })();
     } catch {
-      console.log('MAIN FETCH ERROR');
+      console.log('can`t to fetch data in Main.js');
     }
   }, []);
 
-  const RenderCards = () => {
-    const result = arr.map(item => {
-      const id = Math.random();
+  const renderCards = () => {
+    return tendersData.map(item => {
+      const id = `f${(~~(Math.random()*1e8)).toString(16)}`;
       const { date } = item.records[0].compiledRelease;
-      const name =
-        item.records[0].compiledRelease.parties?.[0].contactPoint.name;
-      const telephone =
-        item.records[0].compiledRelease.parties?.[0].contactPoint.telephone;
+      const name = item.records[0].compiledRelease.parties?.[0].contactPoint.name;
+      const telephone = item.records[0].compiledRelease.parties?.[0].contactPoint.telephone;
       const { title } = item.records[0].compiledRelease.tender;
-      const amount =
-        item.records[0].compiledRelease.planning?.budget.amount.amount;
-      const currency =
-        item.records[0].compiledRelease.planning?.budget.amount.currency;
-      const startDate =
-        item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0]
-          .period.startDate;
-      const endDate =
-        item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0]
-          .period.endDate;
+      const amount = item.records[0].compiledRelease.planning?.budget.amount.amount;
+      const currency = item.records[0].compiledRelease.planning?.budget.amount.currency;
+      const startDate = item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period.startDate;
+      const endDate = item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period.endDate;
 
       return (
         <div className="card" key={id}>
@@ -84,14 +74,12 @@ const Main = () => {
         </div>
       );
     });
-
-    return result;
   };
 
   return (
     <div className="Main">
       <h3>All Tenders:</h3>
-      <div className="cards">{RenderCards()}</div>
+      <div className="cards">{renderCards()}</div>
     </div>
   );
 };
