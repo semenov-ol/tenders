@@ -5,7 +5,7 @@ import tendersAPI from '../services/tendersAPI';
 
 import './Main.css';
 
-const Main = () => {
+const Main = () => { 
   const tenders = new tendersAPI();
 
   const [tendersData, setTendersData] = useState([]);
