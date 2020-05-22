@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Flex, Text } from 'ustudio-ui';
 
 const TenderCard = () => {
-  let location = useLocation();
-  const [item] = useState(location.item);
+  const { item } = useLocation()
 
   if (item === undefined)     {
     return (
