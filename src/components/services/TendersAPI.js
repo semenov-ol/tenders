@@ -1,6 +1,6 @@
 export default class tendersAPI {
   constructor(){
-    this.baseUrl = `https://public.mtender.gov.md/tenders`
+    this.baseUrl = `https://public.mtender.gov.md/tenders`;
   }
  
   getAll = async () => {
