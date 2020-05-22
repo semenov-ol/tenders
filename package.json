@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "styled-components": "^5.1.0",
     "ustudio-ui": "^1.2.5"
@@ -33,23 +32,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "babel-eslint": "^8.2.6",
-    "eslint": "^6.8.0",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.4",
-    "prettier": "^1.16.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run prettier",
-      "pre-push": "call npm run lint && call npm run test"
-    }
-  },
-  "prettier": {
-    "printWidth": 120,
-    "trailingComma": "es5",
-    "singleQuote": true
   }
 }
