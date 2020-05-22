@@ -30,7 +30,7 @@ const Main = () => {
 
   const renderCards = () => {
     return tendersData.map(item => {
-      const id = `f${(~~(Math.random()*1e8)).toString(16)}`;
+      const id = `f${(~~(Math.random()*1e8)).toString(16)}`; 
       const { date } = item.records[0].compiledRelease;
       const name = item.records[0].compiledRelease.parties?.[0].contactPoint.name;
       const telephone = item.records[0].compiledRelease.parties?.[0].contactPoint.telephone;
