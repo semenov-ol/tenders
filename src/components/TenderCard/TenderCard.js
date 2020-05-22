@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Flex, Text } from 'ustudio-ui';
 
 const TenderCard = () => {
-  const { item } = useLocation()
+  const { item } = useLocation();
 
   if (item === undefined)     {
     return (
