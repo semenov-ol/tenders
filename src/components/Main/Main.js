@@ -6,11 +6,11 @@ import tendersAPI from '../services/tendersAPI';
 import './Main.css';
 
 const Main = () => { 
-  const tenders = new tendersAPI();
+  const { getOne } = new tendersAPI();
   const [tendersData, setTendersData] = useState([]);
 
   const getTender = id => {
-    tenders.getOne(id).then(data => setTendersData(prev => [...prev, data]));
+    getOne(id).then(data => setTendersData(prev => [...prev, data]));
   };
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Main = () => {
         }
       })();
     } catch {
-      console.log('can`t to fetch data in Main.js');
+      console.log('can`t fetch data in Main.js');
     }
   }, []);
 
@@ -39,6 +39,8 @@ const Main = () => {
       const currency = item.records[0].compiledRelease.planning?.budget.amount.currency;
       const startDate = item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period.startDate;
       const endDate = item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period.endDate;
+      const ocid = item.records?.[0].ocid
+      
 
       return (
         <div className="card" key={id}>
@@ -62,8 +64,7 @@ const Main = () => {
             </div>
             <Link
               to={{
-                pathname: '/card',
-                item,
+                pathname: `/cards/${ocid}`
               }}
               className="show-info-btn"
             >
