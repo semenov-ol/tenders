@@ -64,9 +64,7 @@ const Main = () => {
               <p>Tel: {telephone} </p>
             </div>
             <Link
-              to={{
-                pathname: `/cards/${ocid}`
-              }}
+              to={`/cards/${ocid}`}
               className="show-info-btn"
             >
               Show detail info
