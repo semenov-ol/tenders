@@ -23,6 +23,7 @@ const Main = () => {
           res.data.map(item => getTender(item.ocid));
         }
       })();
+      return () => (setTendersData([]))
     } catch {
       console.log('can`t fetch data in Main.js');
     }
