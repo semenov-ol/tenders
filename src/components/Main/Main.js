@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Spinner } from 'ustudio-ui';
+import { Flex } from 'ustudio-ui';
 
 import tendersAPI from '../services/tendersAPI';
 
 import './Main.css';
 
-const Main = () => { 
+const Main = () => {
   const { getOne } = new tendersAPI();
   const [tendersData, setTendersData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getTender = id => {
-    getOne(id).then(data => setTendersData(prev => [...prev, data]));
+    getOne(id).then(data =>
+      setTendersData(prev => {
+        setLoading(false);
+        return [...prev, data];
+      })
+    );
   };
 
   useEffect(() => {
@@ -23,7 +31,7 @@ const Main = () => {
           res.data.map(item => getTender(item.ocid));
         }
       })();
-      return () => (setTendersData([]))
+      return () => setTendersData([]);
     } catch {
       console.log('can`t fetch data in Main.js');
     }
@@ -31,7 +39,7 @@ const Main = () => {
 
   const renderCards = () => {
     return tendersData.map(item => {
-      const id = `f${(~~(Math.random()*1e8)).toString(16)}`; 
+      const id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
       const { date } = item.records[0].compiledRelease;
       const name = item.records[0].compiledRelease.parties?.[0].contactPoint.name;
       const telephone = item.records[0].compiledRelease.parties?.[0].contactPoint.telephone;
@@ -40,8 +48,7 @@ const Main = () => {
       const currency = item.records[0].compiledRelease.planning?.budget.amount.currency;
       const startDate = item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period.startDate;
       const endDate = item.records[0].compiledRelease.planning?.budget.budgetBreakdown[0].period.endDate;
-      const ocid = item.records?.[0].ocid
-      
+      const ocid = item.records?.[0].ocid;
 
       return (
         <div className="card" key={id}>
@@ -63,10 +70,7 @@ const Main = () => {
               <p>Contact Name: {name}</p>
               <p>Tel: {telephone} </p>
             </div>
-            <Link
-              to={`/cards/${ocid}`}
-              className="show-info-btn"
-            >
+            <Link to={`/cards/${ocid}`} className="show-info-btn">
               Show detail info
             </Link>
           </div>
@@ -78,7 +82,24 @@ const Main = () => {
   return (
     <div className="Main">
       <h3>All Tenders:</h3>
-      <div className="cards">{renderCards()}</div>
+      <div className="cards">
+        {loading ? (
+          <Flex
+            alignment={{
+              horizontal: 'center',
+              vertical: 'end',
+            }}
+          >
+            <Spinner
+              appearance={{
+                size: 50,
+              }}
+            />
+          </Flex>
+        ) : (
+          renderCards()
+        )}
+      </div>
     </div>
   );
 };
