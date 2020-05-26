@@ -1,37 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Flex, Spinner, Text } from 'ustudio-ui';
+import Flex from 'ustudio-ui/components/Flex';
+import Spinner from 'ustudio-ui/components/Spinner';
+import Text from 'ustudio-ui/components/Text';
 import styled from 'styled-components';
 
-import tendersAPI from '../services/tendersAPI';
+import TendersAPI from '../services/tendersAPI';
 
 const TenderCard = () => {
   const { pathname } = useLocation();
   const [tenderData, setTenderData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { getOne } = new tendersAPI();
-  const baseUri = 'https://public.mtender.gov.md/tenders';
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getOne } = new TendersAPI();
+
   const ocid = pathname.slice(7);
 
   useEffect(() => {
     getOne(ocid)
       .then(data => {
         setTenderData(data);
-        setLoading(false);
+        setIsLoading(false);
       })
       .catch(err => console.log(err));
   }, [ocid]);
 
-  const ContainerDiv = styled.div`
-    fontfamily: Verdana, Geneva, Tahoma, sans-serif;
-    width: 70%;
-    margin-left: 15%;
-    border: 1px solid grey;
-    border-radius: 10px;
-    padding: 20px;
-  `;
+  const dateToString = date => {
+    return new Date(date).toLocaleDateString();
+  };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Flex
         alignment={{
@@ -94,7 +92,7 @@ const TenderCard = () => {
             }}
           >
             <Text variant="h5" style={{ padding: '20px' }}>
-              {title}{' '}
+              {title}
             </Text>
           </Flex>
           <Flex
@@ -107,7 +105,7 @@ const TenderCard = () => {
               color: 'grey',
             }}
           >
-            Date of Publish: {new Date(date).toLocaleString()}
+            Date of Publish: {dateToString(date)}
           </Flex>
           <Flex direction="column" style={{ marginTop: '30px' }}>
             <Text variant="small">Description:</Text>
@@ -122,7 +120,7 @@ const TenderCard = () => {
             margin={{ top: 'large' }}
           >
             <Text variant="h6" style={{ color: 'green', borderRight: '1px solid grey', paddingRight: '4%' }}>
-              Tender start date: {new Date(startDate).toLocaleDateString()}
+              Tender start date: {dateToString(startDate)}
             </Text>
             <Text
               variant="h6"
@@ -131,7 +129,7 @@ const TenderCard = () => {
               Tender Amount: {amount} {currency}
             </Text>
             <Text variant="h6" style={{ color: 'red', paddingLeft: '2%' }}>
-              Tender end Date: {new Date(endDate).toLocaleDateString()}
+              Tender end Date: {dateToString(endDate)}
             </Text>
           </Flex>
           <Flex margin={{ top: 'regular' }} style={{ fontSize: '15px' }}>
@@ -164,5 +162,14 @@ const TenderCard = () => {
     );
   }
 };
+
+const ContainerDiv = styled.div`
+  fontfamily: Verdana, Geneva, Tahoma, sans-serif;
+  width: 70%;
+  margin-left: 15%;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 20px;
+`;
 
 export default TenderCard;

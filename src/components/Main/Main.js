@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Spinner, Text, Flex } from 'ustudio-ui';
+import Flex from 'ustudio-ui/components/Flex';
+import Spinner from 'ustudio-ui/components/Spinner';
+import Text from 'ustudio-ui/components/Text';
 
-import tendersAPI from '../services/tendersAPI';
+import TendersAPI from '../services/tendersAPI';
 
 import './Main.css';
 
 const Main = () => {
-  const { getOne } = new tendersAPI();
+  const { getOne } = new TendersAPI();
   const [tendersData, setTendersData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getTender = id => {
-    getOne(id).then(data =>
-      setTendersData(prev => {
-        setLoading(false);
-        return [...prev, data];
-      })
-    );
+    getOne(id).then(data => {
+      setTendersData(prev => [...prev, data]);
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const Main = () => {
     <div className="Main">
       <Text variant="h5">All Tenders:</Text>
       <div className="cards">
-        {loading ? (
+        {isLoading ? (
           <Flex
             alignment={{
               horizontal: 'center',
