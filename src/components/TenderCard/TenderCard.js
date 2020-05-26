@@ -14,7 +14,7 @@ const TenderCard = () => {
 
   const { getOne } = new TendersAPI();
 
-  const ocid = pathname.slice(7);
+  const ocid = pathname.slice(6);
 
   useEffect(() => {
     getOne(ocid)
@@ -119,16 +119,25 @@ const TenderCard = () => {
             }}
             margin={{ top: 'large' }}
           >
-            <Text variant="h6" style={{ color: 'green', borderRight: '1px solid grey', paddingRight: '4%' }}>
+            <Text
+              variant="h6"
+              style={{ color: 'green', borderRight: '1px solid grey', paddingRight: '4%', fontSize: '13px' }}
+            >
               Tender start date: {dateToString(startDate)}
             </Text>
             <Text
               variant="h6"
-              style={{ color: 'grey', paddingLeft: '2%', borderRight: '1px solid grey', paddingRight: '4%' }}
+              style={{
+                color: 'grey',
+                borderRight: '1px solid grey',
+                paddingRight: '4%',
+                paddingLeft: '2%',
+                fontSize: '13px',
+              }}
             >
               Tender Amount: {amount} {currency}
             </Text>
-            <Text variant="h6" style={{ color: 'red', paddingLeft: '2%' }}>
+            <Text variant="h6" style={{ color: 'red', fontSize: '13px', paddingLeft: '2%' }}>
               Tender end Date: {dateToString(endDate)}
             </Text>
           </Flex>

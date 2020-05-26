@@ -31,7 +31,7 @@ const Main = () => {
         }
       })();
     } catch {
-      console.log('can`t fetch data in Main.js');
+      throw new Error('can not fetch data');
     }
     return () => setTendersData([]);
   }, []);
@@ -69,7 +69,7 @@ const Main = () => {
               <p>Contact Name: {name}</p>
               <p>Tel: {telephone} </p>
             </div>
-            <Link to={`/cards/${ocid}`} className="show-info-btn">
+            <Link to={`/card/${ocid}`} className="show-info-btn">
               Show detail info
             </Link>
           </div>
