@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Spinner } from 'ustudio-ui';
-import { Flex } from 'ustudio-ui';
+import { Spinner, Text, Flex } from 'ustudio-ui';
 
 import tendersAPI from '../services/tendersAPI';
 
@@ -31,15 +30,15 @@ const Main = () => {
           res.data.map(item => getTender(item.ocid));
         }
       })();
-      return () => setTendersData([]);
     } catch {
       console.log('can`t fetch data in Main.js');
     }
+    return () => setTendersData([]);
   }, []);
 
   const renderCards = () => {
     return tendersData.map(item => {
-      const id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
+      const id = (Math.random() * 10).toString(16);
       const { date } = item.records[0].compiledRelease;
       const name = item.records[0].compiledRelease.parties?.[0].contactPoint.name;
       const telephone = item.records[0].compiledRelease.parties?.[0].contactPoint.telephone;
@@ -81,7 +80,7 @@ const Main = () => {
 
   return (
     <div className="Main">
-      <h3>All Tenders:</h3>
+      <Text variant="h5">All Tenders:</Text>
       <div className="cards">
         {loading ? (
           <Flex

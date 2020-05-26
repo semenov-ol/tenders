@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Flex } from 'ustudio-ui';
-import { Text } from 'ustudio-ui';
-import { Spinner } from 'ustudio-ui';
+import { Flex, Spinner, Text } from 'ustudio-ui';
+import styled from 'styled-components';
+
+import tendersAPI from '../services/tendersAPI';
 
 const TenderCard = () => {
   const { pathname } = useLocation();
   const [tenderData, setTenderData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { getOne } = new tendersAPI();
   const baseUri = 'https://public.mtender.gov.md/tenders';
   const ocid = pathname.slice(7);
 
   useEffect(() => {
-    fetch(`${baseUri}/${ocid}`)
-      .then(res => res.json())
+    getOne(ocid)
       .then(data => {
         setTenderData(data);
         setLoading(false);
       })
       .catch(err => console.log(err));
   }, [ocid]);
+
+  const ContainerDiv = styled.div`
+    fontfamily: Verdana, Geneva, Tahoma, sans-serif;
+    width: 70%;
+    margin-left: 15%;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 20px;
+  `;
 
   if (loading) {
     return (
@@ -50,7 +60,6 @@ const TenderCard = () => {
           <Text variant="h4" style={{ marginBottom: '30px' }}>
             Sorry, can't find such tender, Try another one
           </Text>
-          <div />
           <Link to="/">
             <Text style={{ fontSize: '20px' }}>Go back</Text>
           </Link>
@@ -72,25 +81,16 @@ const TenderCard = () => {
     const customer = tenderData.records?.[0].compiledRelease.parties?.[0].details.typeOfBuyer;
 
     return (
-      <div>
+      <React.Fragment>
         <Link to="/"> ← All Tenders</Link>
-        <div
-          style={{
-            fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
-            width: '70%',
-            marginLeft: '15%',
-            border: '1px solid grey',
-            borderRadius: '10px',
-            padding: '20px',
-          }}
-        >
+        <ContainerDiv>
           <Flex
             alignment={{
               vertical: 'center',
               horizontal: 'center',
             }}
             style={{
-              borderBottom: '1px solid grey',
+              borderBottom: '1px dashed grey',
             }}
           >
             <Text variant="h5" style={{ padding: '20px' }}>
@@ -121,13 +121,16 @@ const TenderCard = () => {
             }}
             margin={{ top: 'large' }}
           >
-            <Text variant="h6" style={{ color: 'green', borderRight: '1px solid grey', paddingRight: '5%' }}>
+            <Text variant="h6" style={{ color: 'green', borderRight: '1px solid grey', paddingRight: '4%' }}>
               Tender start date: {new Date(startDate).toLocaleDateString()}
             </Text>
-            <Text variant="h6" style={{ color: 'grey', borderRight: '1px solid grey', paddingRight: '5%' }}>
+            <Text
+              variant="h6"
+              style={{ color: 'grey', paddingLeft: '2%', borderRight: '1px solid grey', paddingRight: '4%' }}
+            >
               Tender Amount: {amount} {currency}
             </Text>
-            <Text variant="h6" style={{ color: 'red' }}>
+            <Text variant="h6" style={{ color: 'red', paddingLeft: '2%' }}>
               Tender end Date: {new Date(endDate).toLocaleDateString()}
             </Text>
           </Flex>
@@ -141,10 +144,12 @@ const TenderCard = () => {
             }}
             direction="column"
             margin={{ top: 'large' }}
+            padding={{ top: 'medium' }}
             style={{
               color: 'grey',
               fontStyle: 'italic',
               fontFamily: 'Courier New, Courier, monospace',
+              borderTop: '1px dashed grey',
             }}
           >
             <Text variant="small">Contact info:</Text>
@@ -154,8 +159,8 @@ const TenderCard = () => {
             <Text variant="small">Address: {address}</Text>
             <Text variant="small">Country: {country}</Text>
           </Flex>
-        </div>
-      </div>
+        </ContainerDiv>
+      </React.Fragment>
     );
   }
 };
