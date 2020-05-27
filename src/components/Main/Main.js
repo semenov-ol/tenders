@@ -53,30 +53,29 @@ const Main = () => {
       const ocid = item.records?.[0].ocid;
 
       return (
-        <div className="card" key={id}>
-          <div className="card-body">
-            <div className="date">
-              <span>{new Date(date).toLocaleString()}</span>
+        <Link to={`/card/${ocid}`} key={id}>
+          <div className="card">
+            <div className="card-body">
+              <div className="date">
+                <span>{new Date(date).toLocaleString()}</span>
+              </div>
+              <div className="title">{title}</div>
+              <div className="budget">
+                <b>
+                  Budget: {amount} {currency}
+                </b>
+              </div>
+              <div className="period">
+                <p> Start Date: {new Date(startDate).toDateString()}</p>
+                <p>End Date: {new Date(endDate).toDateString()} </p>
+              </div>
+              <div className="contact">
+                <p>Contact Name: {name}</p>
+                <p>Tel: {telephone} </p>
+              </div>
             </div>
-            <div className="title">{title}</div>
-            <div className="budget">
-              <b>
-                Budget: {amount} {currency}
-              </b>
-            </div>
-            <div className="period">
-              <p> Start Date: {new Date(startDate).toDateString()}</p>
-              <p>End Date: {new Date(endDate).toDateString()} </p>
-            </div>
-            <div className="contact">
-              <p>Contact Name: {name}</p>
-              <p>Tel: {telephone} </p>
-            </div>
-            <Link to={`/card/${ocid}`} className="show-info-btn">
-              Show detail info
-            </Link>
           </div>
-        </div>
+        </Link>
       );
     });
   };

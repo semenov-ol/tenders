@@ -1,16 +1,33 @@
-.card {
+.Main {
   display: flex;
+  flex-direction: column;
+}
+
+.card {
+  display: block;
+  float: left;
   margin: 20px;
-  width: 65%;
+  width: 44%;
+  height: 330px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
   border: 1px solid grey;
   border-radius: 15px;
+  background-color: rgb(233, 233, 233);
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: rgb(220, 233, 252);
+  transition-duration: 0.4s;
+  transition-delay: 0.1s;
 }
 
 .card-body {
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.25rem
+  padding: 1.25rem;
 }
 
 .card .card-body .date {
@@ -49,4 +66,12 @@
 
 .show-tenders-btn {
   margin-top: 20px;
+}
+
+@media (max-width: 1260px) {
+  .card {
+    display: flex;
+    width: 80%;
+    height: auto;
+  }
 }
