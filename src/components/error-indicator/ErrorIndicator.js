@@ -15,7 +15,7 @@ const ErrorIndicator = () => {
       <img
         src="https://cdn3.iconfinder.com/data/icons/car-indicators/512/car-shock-electric-mode-error-indicator-512.png"
         alt="Error icon"
-        width="15%"
+        width="11%"
       />
       <Text
         styled={{

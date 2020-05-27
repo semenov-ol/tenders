@@ -83,29 +83,31 @@ const Main = () => {
 
   return (
     <div className="Main">
-      <Text variant="h5">All Tenders:</Text>
-      <div className="cards">
-        {!isError ? (
-          isLoading ? (
-            <Flex
-              alignment={{
-                horizontal: 'center',
-                vertical: 'end',
-              }}
-            >
-              <Spinner
-                appearance={{
-                  size: 50,
+      {!isError ? (
+        <React.Fragment>
+          <Text variant="h5">All Tenders:</Text>
+          <div className="cards">
+            {isLoading ? (
+              <Flex
+                alignment={{
+                  horizontal: 'center',
+                  vertical: 'end',
                 }}
-              />
-            </Flex>
-          ) : (
-            renderCards()
-          )
-        ) : (
-          <ErrorIndicator />
-        )}
-      </div>
+              >
+                <Spinner
+                  appearance={{
+                    size: 50,
+                  }}
+                />
+              </Flex>
+            ) : (
+              renderCards()
+            )}
+          </div>
+        </React.Fragment>
+      ) : (
+        <ErrorIndicator />
+      )}
     </div>
   );
 };
