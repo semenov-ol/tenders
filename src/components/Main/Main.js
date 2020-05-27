@@ -5,12 +5,14 @@ import Spinner from 'ustudio-ui/components/Spinner';
 import Text from 'ustudio-ui/components/Text';
 
 import TendersAPI from '../services/tendersAPI';
+import ErrorIndicator from '../error-indicator';
 
 import './Main.css';
 
 const Main = () => {
   const { getOne } = new TendersAPI();
   const [tendersData, setTendersData] = useState([]);
+  const [isError, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const getTender = id => {
@@ -21,18 +23,19 @@ const Main = () => {
   };
 
   useEffect(() => {
-    try {
-      (async () => {
+    (async () => {
+      try {
         const req = await fetch(`https://public.mtender.gov.md/tenders`);
         const res = await req.json();
 
         if (res) {
           res.data.map(item => getTender(item.ocid));
         }
-      })();
-    } catch {
-      throw new Error('can not fetch data');
-    }
+      } catch (err) {
+        setIsLoading(false);
+        setError(true);
+      }
+    })();
     return () => setTendersData([]);
   }, []);
 
@@ -82,21 +85,25 @@ const Main = () => {
     <div className="Main">
       <Text variant="h5">All Tenders:</Text>
       <div className="cards">
-        {isLoading ? (
-          <Flex
-            alignment={{
-              horizontal: 'center',
-              vertical: 'end',
-            }}
-          >
-            <Spinner
-              appearance={{
-                size: 50,
+        {!isError ? (
+          isLoading ? (
+            <Flex
+              alignment={{
+                horizontal: 'center',
+                vertical: 'end',
               }}
-            />
-          </Flex>
+            >
+              <Spinner
+                appearance={{
+                  size: 50,
+                }}
+              />
+            </Flex>
+          ) : (
+            renderCards()
+          )
         ) : (
-          renderCards()
+          <ErrorIndicator />
         )}
       </div>
     </div>

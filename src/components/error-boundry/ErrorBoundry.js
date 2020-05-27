@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Flex from 'ustudio-ui/components/Flex';
-import Text from 'ustudio-ui/components/Text';
+import ErrorIndicator from '../error-indicator';
 
 export default class ErrorBoundry extends Component {
   state = {
@@ -15,16 +14,7 @@ export default class ErrorBoundry extends Component {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <Flex
-          alignment={{
-            vertical: 'center',
-            horizontal: 'center',
-          }}
-        >
-          <Text variant="h5">Something goes wrong, please try again</Text>
-        </Flex>
-      );
+      return <ErrorIndicator />;
     }
 
     return this.props.children;
