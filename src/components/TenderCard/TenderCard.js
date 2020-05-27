@@ -4,6 +4,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Text from 'ustudio-ui/components/Text';
 import styled from 'styled-components';
+import { css } from 'styled-components';
 
 import TendersAPI from '../services/tendersAPI';
 
@@ -87,11 +88,20 @@ const TenderCard = () => {
               vertical: 'center',
               horizontal: 'center',
             }}
-            style={{
-              borderBottom: '1px dashed grey',
+            styled={{
+              Flex: css`
+                border-bottom: 1px dashed grey;
+              `,
             }}
           >
-            <Text variant="h5" style={{ padding: '20px' }}>
+            <Text
+              variant="h5"
+              styled={{
+                Text: css`
+                  padding: 20px;
+                `,
+              }}
+            >
               {title}
             </Text>
           </Flex>
@@ -100,14 +110,23 @@ const TenderCard = () => {
               vertical: 'end',
               horizontal: 'end',
             }}
-            style={{
-              fontSize: '12px',
-              color: 'grey',
+            styled={{
+              Flex: css`
+                font-size: 12px;
+                color: grey;
+              `,
             }}
           >
             Date of Publish: {dateToString(date)}
           </Flex>
-          <Flex direction="column" style={{ marginTop: '30px' }}>
+          <Flex
+            direction="column"
+            styled={{
+              Flex: css`
+                margin-top: 30px;
+              `,
+            }}
+          >
             <Text variant="small">Description:</Text>
             <Text variant="h6"> {description}</Text>
           </Flex>
@@ -121,27 +140,45 @@ const TenderCard = () => {
           >
             <Text
               variant="h6"
-              style={{ color: 'green', borderRight: '1px solid grey', paddingRight: '4%', fontSize: '13px' }}
+              styled={{
+                Text: css`
+                  color: green;
+                  border-right: 1px solid grey;
+                  padding-right: 4%;
+                  font-size: 13px;
+                `,
+              }}
             >
               Tender start date: {dateToString(startDate)}
             </Text>
             <Text
               variant="h6"
-              style={{
-                color: 'grey',
-                borderRight: '1px solid grey',
-                paddingRight: '4%',
-                paddingLeft: '2%',
-                fontSize: '13px',
+              styled={{
+                Text: css`
+                  color: grey;
+                  border-right: 1px solid grey;
+                  padding-right: 4%;
+                  padding-left: 2%;
+                  font-size: 13px;
+                `,
               }}
             >
               Tender Amount: {amount} {currency}
             </Text>
-            <Text variant="h6" style={{ color: 'red', fontSize: '13px', paddingLeft: '2%' }}>
+            <Text
+              variant="h6"
+              styled={{
+                Text: css`
+                  color: red;
+                  font-size: 13px;
+                  padding-left: 2%;
+                `,
+              }}
+            >
               Tender end Date: {dateToString(endDate)}
             </Text>
           </Flex>
-          <Flex margin={{ top: 'regular' }} style={{ fontSize: '15px' }}>
+          <Flex margin={{ top: 'regular' }}>
             <Text variant="caption">Customer: {customer}</Text>
           </Flex>
           <Flex
@@ -152,11 +189,12 @@ const TenderCard = () => {
             direction="column"
             margin={{ top: 'large' }}
             padding={{ top: 'medium' }}
-            style={{
-              color: 'grey',
-              fontStyle: 'italic',
-              fontFamily: 'Courier New, Courier, monospace',
-              borderTop: '1px dashed grey',
+            styled={{
+              Flex: css`
+                color: grey;
+                font-style: italic;
+                border-top: 1px dashed grey;
+              `,
             }}
           >
             <Text variant="small">Contact info:</Text>
